@@ -1,0 +1,28 @@
+#ext-yt-ad-skip_notification {
+    color: #ffffff;
+    font-size: large;
+    font-weight: bold;
+    padding: 0.5em;
+}
+
+#ext-yt-ad-skip_notification-container {
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 1em 2em;
+    border-radius: 20px;
+
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#ext-yt-ad-skip_notification-container.active {
+    visibility: visible;
+    opacity: 1;
+}
+
