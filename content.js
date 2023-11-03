@@ -1,18 +1,18 @@
 const _ = "EXT_YT_SKIP_ADD";
+const emojis = ['😸', '😀', '😃', '😄', '😁', '🤩', '😉', '😊', '🥰', '🥳', '🤗', '😋', '😎', '😌', '🤡'];
 console.log(_, 'injected');
 
 
 
-/* inject skip notification */
+/* create skip notification */
 const notificationElement = document.createElement('div');
 notificationElement.id = 'ext-yt-ad-skip_notification';
-notificationElement.innerHTML = 'Ad Skipped :)';
+notificationElement.innerHTML = 'Ad skipped ⏭️ ' + randomEmoji();
 
 const notificationContainerElement = document.createElement('div');
 notificationContainerElement.id = 'ext-yt-ad-skip_notification-container';
 notificationContainerElement.append(notificationElement);
 
-document.body.append(notificationContainerElement);
 
 
 
@@ -36,7 +36,6 @@ const observer = new MutationObserver(callback);
 
 // Start observing the target node for configured mutations
 const observeInterval = setInterval(() => {
-
     try {
         // Select the node that will be observed for mutations
         const targetNode = document.querySelectorAll('.ytp-ad-module')[0];
@@ -65,8 +64,25 @@ function checkSkipButton() {
 }
 
 function showNotification(duration = 5000) {
+    const fullscreenRoot = document.fullscreenElement;
+    if (fullscreenRoot) {
+        fullscreenRoot.append(notificationContainerElement);
+    } else {
+        const ytPlayer = document.getElementById('player');
+        if (ytPlayer) {
+            ytPlayer.append(notificationContainerElement);
+        } else {
+            document.body.append(notificationContainerElement);
+        }
+    }
+
     notificationContainerElement.classList.add('active');
     setTimeout(() => {
         notificationContainerElement.classList.remove('active');
     }, duration);
+}
+
+function randomEmoji() {
+    const idx = Math.floor(Math.random() * emojis.length);
+    return emojis[idx];
 }
