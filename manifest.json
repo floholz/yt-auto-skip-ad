@@ -1,6 +1,6 @@
 {
   "name": "YT auto skip Ads",
-  "description": "Automatically skip ads on Youtube",
+  "description": "Automatically skips ads on Youtube, when possible ;)",
   "version": "1.0",
   "manifest_version": 3,
   "permissions": [],
