@@ -1,7 +1,7 @@
 {
   "name": "YT auto skip Ads",
   "description": "Automatically skips ads on Youtube, when possible ;)",
-  "version": "1.0",
+  "version": "2.0",
   "manifest_version": 3,
   "icons": {
     "16": "/images/logo-16.png",

@@ -1,5 +1,9 @@
 const _ = "EXT_YT_SKIP_ADD";
 const emojis = ['😸', '😀', '😃', '😄', '😁', '🤩', '😉', '😊', '🥰', '🥳', '🤗', '😋', '😎', '😌', '🤡'];
+const randomEmojiIdxes = crypto
+    .getRandomValues(new Uint8ClampedArray(1000))
+    .map(value => (value / 255) * emojis.length - 1);
+let emojiIdx = randomEmojiIdxes[Math.floor(Math.random() * randomEmojiIdxes.length)];
 console.log(_, 'injected');
 
 
@@ -13,7 +17,9 @@ const notificationContainerElement = document.createElement('div');
 notificationContainerElement.id = 'ext-yt-ad-skip_notification-container';
 notificationContainerElement.append(notificationElement);
 
-
+const fallbackRootElement = document.createElement('div');
+fallbackRootElement.id = 'ext-yt-ad-skip_fallback-root';
+document.body.append(fallbackRootElement);
 
 
 
@@ -53,7 +59,7 @@ const observeInterval = setInterval(() => {
 
 function checkSkipButton() {
     console.log(_, 'Ad check');
-    const skipBtn = document.querySelectorAll('.ytp-ad-skip-button')[0];
+    const skipBtn = document.querySelectorAll('.ytp-ad-skip-button-modern')[0];
     const skipSlot = document.querySelectorAll('.ytp-ad-skip-button-slot')[0];
 
     if (skipBtn && skipSlot.style.display !== 'none') {
@@ -68,11 +74,11 @@ function showNotification(duration = 5000) {
     if (fullscreenRoot) {
         fullscreenRoot.append(notificationContainerElement);
     } else {
-        const ytPlayer = document.getElementById('player');
+        const ytPlayer = document.getElementById('ytd-player');
         if (ytPlayer) {
             ytPlayer.append(notificationContainerElement);
         } else {
-            document.body.append(notificationContainerElement);
+            fallbackRootElement.append(notificationContainerElement);
         }
     }
 
@@ -83,6 +89,6 @@ function showNotification(duration = 5000) {
 }
 
 function randomEmoji() {
-    const idx = Math.floor(Math.random() * emojis.length);
-    return emojis[idx];
+    emojiIdx = (emojiIdx + 1) % randomEmojiIdxes.length;
+    return emojis[emojiIdx];
 }

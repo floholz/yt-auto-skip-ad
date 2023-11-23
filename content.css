@@ -26,3 +26,9 @@
     opacity: 1;
 }
 
+#ext-yt-ad-skip_fallback-root {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+}
